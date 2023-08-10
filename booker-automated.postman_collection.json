@@ -1,0 +1,207 @@
+{
+	"info": {
+		"_postman_id": "0cf712d3-cd94-4acc-84db-4de83a03e0e6",
+		"name": "booker-automated",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"} )\r",
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.set(\"Id\", jsonData.bookingid); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"totalprice\": {{totalprice}},\n    \"depositpaid\": {{depositpaid}},\n    \"bookingdates\": {\n        \"checkin\": \"{{checkin}}\",\n        \"checkout\": \"{{checkout}}\"\n    },\n    \"additionalneeds\": \"{{additionalneeds}}\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/booking",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"} )\r",
+							"\r",
+							"pm.test(\"Verify values in response\", function() {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.firstname).to.be.a('string');\r",
+							"    pm.expect(jsonData.lastname).to.be.a('string');\r",
+							"    pm.expect(jsonData.totalprice).to.be.a(\"number\");\r",
+							"    pm.expect(jsonData.depositpaid).to.be.true\r",
+							"    pm.expect(jsonData.bookingdates.checkin).to.match(/\\d{4}-\\d{2}-\\d{2}/);\r",
+							"    pm.expect(jsonData.bookingdates.checkout).to.match(/\\d{4}-\\d{2}-\\d{2}/);\r",
+							"    pm.expect(jsonData.additionalneeds).to.be.a('string');\r",
+							"} )"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/booking/{{Id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"booking",
+						"{{Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"} )\r",
+							"\r",
+							"pm.test(\"Verify values in response\", function() {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.firstname).to.be.a('string');\r",
+							"    pm.expect(jsonData.lastname).to.be.a('string');\r",
+							"    pm.expect(jsonData.totalprice).to.be.a(\"number\");\r",
+							"    pm.expect(jsonData.depositpaid).to.be.true\r",
+							"    pm.expect(jsonData.bookingdates.checkin).to.match(/\\d{4}-\\d{2}-\\d{2}/);\r",
+							"    pm.expect(jsonData.bookingdates.checkout).to.match(/\\d{4}-\\d{2}-\\d{2}/);\r",
+							"    pm.expect(jsonData.additionalneeds).to.be.a('string');\r",
+							"} )\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46cGFzc3dvcmQxMjM="
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\": \"{{firstname}}\",\n    \"lastname\": \"{{lastname}}\",\n    \"totalprice\": {{updateprice}},\n    \"depositpaid\": {{depositpaid}},\n    \"bookingdates\": {\n        \"checkin\": \"{{checkin}}\",\n        \"checkout\": \"{{checkout}}\"\n    },\n    \"additionalneeds\": \"{{additionalneeds}}\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/booking/{{Id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"booking",
+						"{{Id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is\", function() {\r",
+							"    pm.response.to.have.status(201);\r",
+							"} )\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46cGFzc3dvcmQxMjM="
+					}
+				],
+				"url": {
+					"raw": "{{url}}/booking/{{Id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"booking",
+						"{{Id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

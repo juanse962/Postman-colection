@@ -1,0 +1,2 @@
+firstname, lastname, totalprice, depositpaid, checkin, checkout, additionalneeds, username, password, updateprice
+Sebastian, Gomez, 999, true, 2018-01-01, 2019-01-01, Breakfast, admin, password123, 444
